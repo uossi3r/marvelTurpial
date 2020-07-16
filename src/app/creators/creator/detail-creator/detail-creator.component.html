@@ -44,10 +44,35 @@
             <div fxLayout="column">
                 <h2>COMICS</h2>
                 <div fxLayout="column" *ngIf="creator.comics.available!=0; else noComics">
-                    <div fxFlex="50" fxFlex.sm="100" *ngFor= "let comics of creator.comics.items">
-                        <ul>
-                            <li><a fxFlex mat-flat-buttons [routerLink]="['/detail-character', getID(comics.resourceURI)]">{{comics.name}}</a></li>
-                        </ul>
+                    <div class="comics-detail" fxFlex="50" fxFlex.sm="100" *ngFor= "let comic of comics">
+                        <a href="/detail-comic/{{comic.id}}">
+                            <mat-card class="card-comic">
+                                <img mat-card-image src="{{comic.thumbnail.path}}.{{comic.thumbnail.extension}}" alt="{{comic.title}}">
+                                <mat-card-title>
+                                    <h4>{{comic.title}}</h4>
+                                </mat-card-title>
+                                <mat-card-content>
+                                    <h5>
+                                        ${{ comic.prices[0].price }}
+                                    </h5>
+                                    
+                                    <ng-container *ngIf="comic.creators.items[0]; else noWriter">
+                                        <h5>{{ artistFound(comic.creators.items, 'Writer') }}</h5>
+                                    </ng-container>  
+                                    <ng-template #noWriter>  
+                                        <h5>Writer not specified</h5>
+                                    </ng-template>
+                                    
+                                    <ng-container *ngIf="comic.creators.items[0]; else noPenciler">
+                                        <h5>{{ artistFound(comic.creators.items, 'Penciller (cover)') }}</h5>
+                                    </ng-container>  
+                                    <ng-template #noPenciler>  
+                                        <h5>Penciller (cover) not specified</h5>
+                                    </ng-template>
+                                    
+                                </mat-card-content>
+                            </mat-card>
+                        </a>
                     </div>
                 </div>
                 <ng-template #noComics>
@@ -59,18 +84,40 @@
             <div fxLayout="column">
                 <h2>SERIES</h2>
                 <div fxLayout="column" *ngIf="creator.series.available!=0; else noSeries">
-                    <div fxLayout="column" *ngIf="creator.series.name; else onlyOne">
-                        <ul>
-                            <li><a fxFlex mat-flat-buttons [routerLink]="['/detail-series', getID(creator.series.resourceURI)]">{{creator.series.name}}</a></li>
-                        </ul>
+                    <div class="comics-detail" fxFlex="50" fxFlex.sm="100" *ngFor= "let serie of series">
+                        <mat-card>
+                            <img mat-card-image src="{{serie.thumbnail.path}}.{{serie.thumbnail.extension}}" alt="{{serie.name}}">
+                            <mat-card-title>
+                                <h4>{{serie.title}}</h4>
+                            </mat-card-title>
+                            <mat-card-content>
+                                <ng-container *ngIf="serie.creators.items[0]; else noWriter">
+                                    <h5>{{ artistFound(serie.creators.items, 'Writer') }}</h5>
+                                </ng-container>  
+                                <ng-template #noWriter>  
+                                    <h5>Writer not specified</h5>
+                                </ng-template>
+                                
+                                <h5>
+                                    From: {{serie.startYear}} To: {{serie.endYear}}
+                                </h5>
+                        
+                                <ng-container *ngIf="serie.type!=''; else noType">
+                                    <h5>Type: {{serie.type}} </h5>
+                                </ng-container>  
+                                <ng-template #noType>  
+                                    <h5>Type not specified</h5>
+                                </ng-template>
+                        
+                                <ng-container *ngIf="serie.rating!=''; else noRating">
+                                    <h5>Rating: {{serie.rating}} </h5>
+                                </ng-container>  
+                                <ng-template #noRating>  
+                                    <h5>Rating not specified</h5>
+                                </ng-template>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
-                    <ng-template #onlyOne>
-                        <div fxFlex="50" fxFlex.sm="100" *ngFor= "let series of creator.series.items">
-                            <ul>
-                                <li>{{series.name}}</li>
-                            </ul>
-                        </div>
-                    </ng-template>
                 </div>
                 <ng-template #noSeries>
                     <h3>
