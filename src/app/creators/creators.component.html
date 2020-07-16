@@ -1,0 +1,25 @@
+<div class="content" fxFlex fxLayout="column">
+    <div fxLayout="row wrap">
+        <div class="separator1M" fxFlex="100" fxLayout="column">
+            <mat-paginator  [pageSizeOptions]="[20,50,100]"
+                            [length]="numCreators | async"
+                            showFirstLastButtons
+                            (page)="onPageChange($event)"
+            ></mat-paginator>
+        </div>
+        <div class="separator1" fxFlex="100" fxLayout="column">
+            <ul class="content-letter" search-list=".letter" model="search">
+                <li class="letter" (click)="onClick($event)" *ngFor="let letter of alphabet">{{ letter }}</li>
+            </ul>
+            <input placeholder="Search" class="search-criteria" type="text" (keyup)="onKeyChange($event)">
+        </div>
+        <div class="separator1M" fxFlex="100" fxLayout="column">
+            <div class="centertext speech-bubble-extern">
+                <h1 class="title speech-bubble">Creators</h1>
+            </div>
+        </div>
+        <div class="separator1" fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" *ngFor= "let creator of allCreators | async">
+            <app-creator [creator]=creator></app-creator>
+        </div>
+    </div>
+</div>

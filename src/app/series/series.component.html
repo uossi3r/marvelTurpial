@@ -1,0 +1,34 @@
+<div class="content" fxFlex fxLayout="column">
+    <div fxLayout="row wrap">
+        <div class="separator1M" fxFlex="100" fxLayout="column">
+            <mat-paginator  [pageSizeOptions]="[20,50,100]"
+                            [length]="numSeries | async"
+                            showFirstLastButtons
+                            (page)="onPageChange($event)"
+            ></mat-paginator>
+            <div class="separator1" fxFlex="100" fxLayout="column">
+                <ul class="content-letter" search-list=".letter" model="search">
+                    <li class="letter" (click)="onClick($event)" *ngFor="let letter of alphabet">{{ letter }}</li>
+                </ul>
+            </div>
+            <div id="search-order" fxFlex="100" fxLayout="column">
+                <input placeholder="Search" class="search-criteria" type="text" (keyup)="onKeyChange($event)">
+                <select class="form-control" aria-placeholder="price" id="price-order" (change)="onChange($event)">
+                    <option value="">--Please choose an option--</option>
+                    <option value="collection">Collection</option>
+                    <option value="limited">Limited</option>
+                    <option value="one shot">One Shot</option>
+                    <option value="ongoing">ongoing</option>
+                </select>
+            </div>
+            <div class="centertext speech-bubble-extern">
+                <h1 class="title speech-bubble">Series</h1>
+            </div>
+        </div>
+        <div class="separator1M" fxFlex="100" fxLayout="column">
+        </div>
+        <div class="separator1" fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" *ngFor= "let serie of allSeries | async">
+            <app-serie [serie]=serie></app-serie>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+
+<div class="content" fxFlex fxLayout="column">
+    <div fxLayout="row wrap">
+
+        <div class="separator1M" fxFlex="100" fxLayout="column">
+            <div class="centertext speech-bubble-extern">
+                <h1 class="title speech-bubble">{{comic.title}}</h1>
+            </div>
+        </div>
+
+        <div class="separator1M" fxFlex="50" fxFlex.sm="100" fxLayout="column">
+            <img mat-card-image src="{{comic.thumbnail.path}}.{{comic.thumbnail.extension}}" alt="{{comic.name}}">
+        </div>
+        <div class="separator1 content-detail" fxFlex="50" fxFlex.sm="100" fxLayout="column">
+            <h2>DESCRIPTION</h2>
+            <h3 *ngIf="comic.description; else noDescription">
+                {{comic.description}}
+            </h3>
+            <ng-template #noDescription>
+                <h3>
+                    No Description
+                </h3>
+            </ng-template>
+            <div fxLayout="column">
+                <h2>CHARACTERS</h2>
+                <div fxLayout="column" *ngIf="comic.characters.available!=0; else noCharacter">
+                    <div fxFlex="50" fxFlex.sm="100" *ngFor= "let character of characters">
+                        <ul>
+                            <li><a href="detail-character/{{character.id}}">
+                                {{character.name}}
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <ng-template #noCharacter>
+                    <h3>
+                        NO CHARACTERS
+                    </h3>
+                </ng-template>
+            </div>
+            <div fxLayout="column">
+                <h2>CREATORS</h2>
+                <div fxLayout="column" *ngIf="comic.creators.available!=0; else noCreators">
+                    <ul class="comics-detail" fxFlex="50" fxFlex.sm="100" *ngFor= "let creator of comic.creators.items">
+                        <li>
+                            <a fxFlex mat-flat-buttons [routerLink]="['/detail-creator', getID(creator.resourceURI)]">{{creator.role}}: {{creator.name}}</a>
+                        </li>
+                    
+                    </ul>
+                </div>
+                <ng-template #noCreators>
+                    <h3>
+                        No Creators
+                    </h3>
+                </ng-template>
+            </div>
+
+        </div>
+
+    </div>
+</div>

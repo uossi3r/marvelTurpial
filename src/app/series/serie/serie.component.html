@@ -1,0 +1,58 @@
+<mat-card>
+    <img mat-card-image src="{{serie.thumbnail.path}}.{{serie.thumbnail.extension}}" alt="{{serie.name}}">
+    <mat-card-title>
+        <h2 class="title">{{serie.title}}</h2>
+    </mat-card-title>
+    <mat-card-content>
+        <ng-container *ngIf="serie.creators.items[0]; else noWriter">
+            <h4>{{ artistFound(serie.creators.items, 'Writer') }}</h4>
+        </ng-container>  
+        <ng-template #noWriter>  
+            <h4>Writer not specified</h4>
+        </ng-template>
+        
+        <h4>
+            From: {{serie.startYear}} To: {{serie.endYear}}
+        </h4>
+
+        <ng-container *ngIf="serie.type!=''; else noType">
+            <h4>Type: {{serie.type}} </h4>
+        </ng-container>  
+        <ng-template #noType>  
+            <h4>Type not specified</h4>
+        </ng-template>
+
+        <ng-container *ngIf="serie.rating!=''; else noRating">
+            <h4>Rating: {{serie.rating}} </h4>
+        </ng-container>  
+        <ng-template #noRating>  
+            <h4>Rating not specified</h4>
+        </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="centerButton" *ngIf="serie.description; else noDescription">
+        <button class="centerButton" mat-flat-button color="primary" (click)="open(content)">Description</button>
+    </mat-card-actions>
+    <ng-template #noDescription>
+        <mat-card-actions class="centerButton">
+            <button class="centerButton" mat-flat-button disabled color="primary">Description</button>
+        </mat-card-actions>
+    </ng-template>
+</mat-card>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-basic-title">{{serie.title}}</h2>
+      <a type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </a>
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            <p>
+                Description: <span>{{serie.description}}</span>
+            </p>
+        </div>
+    </div>
+  </ng-template>
+  
+  

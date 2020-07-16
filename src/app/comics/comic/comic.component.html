@@ -1,0 +1,53 @@
+<a class="presentation" [routerLink]="['/detail-comic', comic.id]">
+    <mat-card>
+        <img mat-card-image src="{{comic.thumbnail.path}}.{{comic.thumbnail.extension}}" alt="{{comic.title}}">
+        <mat-card-title>
+            <h2 class="title">{{comic.title}}</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <h4>
+                ${{ comic.prices[0].price }}
+            </h4>
+            
+            <ng-container *ngIf="comic.creators.items[0]; else noWriter">
+                <h4>{{ artistFound(comic.creators.items, 'Writer') }}</h4>
+            </ng-container>  
+            <ng-template #noWriter>  
+                <h4>Writer not specified</h4>
+            </ng-template>
+            
+            <ng-container *ngIf="comic.creators.items[0]; else noPenciler">
+                <h4>{{ artistFound(comic.creators.items, 'Penciller (cover)') }}</h4>
+            </ng-container>  
+            <ng-template #noPenciler>  
+                <h4>Penciller (cover) not specified</h4>
+            </ng-template>
+            
+        </mat-card-content>
+        <mat-card-actions class="centerButton" *ngIf="comic.description; else noDescription">
+            <button class="centerButton" mat-flat-button color="primary" (click)="open(content)">Description</button>
+        </mat-card-actions>
+        <ng-template #noDescription>
+            <mat-card-actions class="centerButton">
+                <button class="centerButton" mat-flat-button disabled color="primary">Description</button>
+            </mat-card-actions>
+        </ng-template>
+    </mat-card>
+</a>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-basic-title">{{comic.title}}</h2>
+      <a type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </a>
+    </div>
+    <div class="modal-body">
+        <div class="content">
+            <p>
+                Description: <span>{{comic.description}}</span>
+            </p>
+        </div>
+    </div>
+  </ng-template>

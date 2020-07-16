@@ -1,0 +1,16 @@
+<a class="presentacion" fxFlex mat-flat-buttons [routerLink]="['/detail-character', character.id]">
+    <mat-card>
+        <img mat-card-image src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" alt="{{character.name}}">
+        <mat-card-title>
+            <h2>{{character.name}}</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <h4>
+                Numbers of Comics: {{character.comics.available}}
+            </h4>
+            <h4>
+                Numbers of Series: {{character.series.available}}
+            </h4>
+        </mat-card-content>
+    </mat-card>
+</a>

@@ -1,0 +1,25 @@
+img.mat-card-image {
+    min-height: 370px;
+    max-height: 370px;
+}
+
+.presentacion{
+    padding: 0;
+    border: 1px solid transparent;
+}
+
+h1 {
+    background-image: url(../../../assets/bubble.png);
+}
+
+
+.presentacion:hover {
+    transform: scale(1.05);
+    transition-duration: .5s;
+    border: 1px solid #3f51b5;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
